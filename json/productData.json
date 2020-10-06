@@ -2,17 +2,17 @@
     "products": [
         {
             "id": 1,
-            "title": "商品1",
+            "name": "商品1",
             "price": 100
         },
         {
             "id": 2,
-            "title": "商品2",
+            "name": "商品2",
             "price": 200
         },
         {
             "id": 3,
-            "title": "商品3",
+            "name": "商品3",
             "price": 300
         }
     ]
