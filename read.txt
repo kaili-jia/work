@@ -4,9 +4,4 @@ Git is free software.
 Git is a distributed version control system.
 Git is free software distributed under the GPL.
 zzzzzzzzzzzzzzzzzzzzzzzzs
-<<<<<<< HEAD
 Git has a mutable index called stage of file.
-=======
-Git has a mutable index called stage of file.
-hahhahah
->>>>>>> 0504e9471f87d70934bff608418afbe468747a08
