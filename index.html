@@ -105,20 +105,32 @@
                     //如果没有，将obj添加到arr1中
                     //如果有 找到arr1中那个对象 并将她的num属性自加1
                     let existObj = arr1.find(v => v.id == id);
-                    if (!existObj) {
-                        obj.num = 1;
-                        arr1.push(obj);
-                        console.log(arr1); //购物车的数据
-                    } else {
+                    if (existObj) {
                         existObj.num++;
                         console.log(existObj);
+                    } else {
+                        obj.num = 1;
+                        arr1.push(obj);
+                        // console.log(arr1); //购物车的数据
                     }
-                    // arr1就是加入购物车的数据
+                    // arr1就是加入购物车的所有数据
                     console.log(arr1);
+
                     // 把购物车数据存到json文件中
-                    // axios.post("http://localhost:3000/cart", arr1).then(res => {
-                    //     console.log(res.data)
+                    for (var i = 0; i < arr1.length; i++) {
+                        axios.post("http://localhost:3000/carts", arr1[i]).then(res => {
+                            console.log(res.data);
+                        }).catch(e => {
+                            console.log(e);
+                        })
+                    }
+                    // arr1.forEach(v => {
+                    //     //v 为购物车添加的对象
+                    //     console.log(v);
+
                     // })
+
+
                 }
 
             }
