@@ -30,12 +30,7 @@
 
     <h2>商品</h2>
     <ul class="shopping">
-        <!-- <li>
-            <h2>商品名称：${v.name}</h2>
-            <p>商品价格:${v.price}</p>
-            <p>销售额:${v.sales}</p>
-            <input type="button" id="add-btn" add-id="${v.id}" value="加入购物车" class="add-shopping"/>
-        </li>-->
+
     </ul>
 
     <h2>我的商品列表</h2>
@@ -44,25 +39,19 @@
         <p style="margin-left: -90px;">单价</p>
         <p>操作</p>
     </div>
+
     <ul class="myShoppingCar">
-        <!-- <li>
-                <h2>${v.name}</h2>
-                <p>商品单价:${v.price}</p>
-                <input type="button"  jian-id="${v.id}" value="-" class="Jiannum"/>
-                <span>${v.num}</span>
-                <input type="button"  jia-id="${v.id}" value="+" class="Jianum"/>
-                <input type="button"  del-id="${v.id}" value="删除" class="del-shopping"/>
-            </li> -->
+
     </ul>
 
 
     <script>
-        var arr;
-        (async function () {
-            await axios.get("http://localhost:3000/products").then(res => {
+        async function goods() {
+            //获取json 文件中的商品
+            var arr;
+            await axios.get("http://localhost:3000/product").then(res => {
                 arr = res.data;
             })
-            console.log(arr);
             let html1 = "";
             arr.forEach(v => {
                 console.log($(v.name));
@@ -75,11 +64,32 @@
 				</li>
 				 `
             })
-            console.log(html1);
-            $(".shopping").html(html1);
-            // console.log(html);
-            // let Sul = document.querySelector(".shopping")
-            // Sul.innerHTML = html;
+            $shop = $(".shopping");
+            $shop.html = "";
+            //将json文件中的商品显示在页面上
+            $(".shopping").append(html1);
+        };
+        goods();
+
+        //加购
+        // $("#add-btn").click(function (e) {
+        //     if (e.target.getAttribute("add-id")) {
+        //         let id = e.target.getAttribute("data-id");
+        //         axios.post("http://localhost:3000/carts", {
+
+        //         }).then(res => {
+        //             console.log(res.data);
+        //         }).catch(e => {
+        //             console.log(e);
+        //         })
+        //     }
+
+        // })
+        (async function () {
+            var arr;
+            await axios.get("http://localhost:3000/product").then(res => {
+                arr = res.data;
+            })
             var arr1;
             await axios.get(" http://localhost:3000/carts").then(res1 => {
                 arr1 = res1.data;
@@ -88,14 +98,9 @@
             console.log(arr1);
 
             // 加入购物车按钮
-            console.log($("input.add-shopping:first"));
             var btn = $("input.add-shopping");
-            console.log(btn);
             for (var i = 0; i < btn.length; i++) {
-                console.log(i);
                 btn[i].onclick = function () {
-                    console.log(this);
-                    console.log(this.getAttribute("add-id"));
                     var id = this.getAttribute("add-id");
                     //根据添加按钮的id去arr找对应的商品对象
                     let obj = arr.find(v => v.id == id);
@@ -114,16 +119,25 @@
                         // console.log(arr1); //购物车的数据
                     }
                     // arr1就是加入购物车的所有数据
-                    console.log(arr1);
+                    console.log(arr1[1]);
+
 
                     // 把购物车数据存到json文件中
                     for (var i = 0; i < arr1.length; i++) {
-                        axios.post("http://localhost:3000/carts", arr1[i]).then(res => {
-                            console.log(res.data);
-                        }).catch(e => {
-                            console.log(e);
-                        })
+                        (async function () {
+                            await axios.post("http://localhost:3000/carts", {
+                                id: arr1[i].id,
+                                name: arr1[i].name,
+                                price: arr1[i].price,
+                                num: arr1[i].num
+                            }).then(res => {
+                                console.log("成功");
+                            }).catch(e => {
+                                console.log("失败");
+                            })
+                        })()
                     }
+                   
                     // arr1.forEach(v => {
                     //     //v 为购物车添加的对象
                     //     console.log(v);
@@ -134,9 +148,6 @@
                 }
 
             }
-
-
-
         })();
     </script>
 
